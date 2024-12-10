@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Link {
-  id        String   @id @default(cuid())
+  id        Int   @id @default(autoincrement())
   longUrl   String
   shortSlug String   @unique
   visits    Int      @default(0)
