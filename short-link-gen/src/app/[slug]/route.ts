@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
-  const { slug } = params;
+  const slug = params.slug;
+
+  if (!slug) {
+    return new Response('Slug not provided', { status: 400 });
+  }
 
   const link = await prisma.link.findUnique({
     where: { shortSlug: slug },
