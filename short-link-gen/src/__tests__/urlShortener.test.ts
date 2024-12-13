@@ -1,8 +1,8 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
 
 describe('URL Shortener Integration Test', () => {
-  let browser: puppeteer.Browser;
-  let page: puppeteer.Page;
+  let browser: Browser;
+  let page: Page;
 
   beforeAll(async () => {
     browser = await puppeteer.launch({
@@ -18,21 +18,12 @@ describe('URL Shortener Integration Test', () => {
 
   test('Shorten URL and verify redirection and visitor count', async () => {
     const longUrl = 'https://www.example.com';
-    
-    
     await page.goto('http://localhost:3000');
-
-    
     await page.type('input[name="url"]', longUrl);
     await page.click('button#shorten');
-
-    
     await page.waitForSelector('a#shortUrl');
     const shortUrl = await page.$eval('a#shortUrl', (el:any) => el.getAttribute('href'));
-
-    expect(shortUrl).toBeTruthy();
-
-    
+    expect(shortUrl).toBeTruthy();  
     await page.goto(`http://localhost:3000${shortUrl}`);
     await page.waitForTimeout(1000);
     expect(page.url()).toBe(longUrl);
