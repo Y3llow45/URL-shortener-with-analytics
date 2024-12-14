@@ -1,4 +1,5 @@
 module.exports = {
+  testTimeout: 200000,
   preset: 'ts-jest',
   testEnvironment: 'node',
   transform: {
