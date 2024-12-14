@@ -66,6 +66,7 @@ export default function HomePage() {
             <button
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
+              id='updateVisitsCount'
             >
               Refresh Visitors Count
             </button>

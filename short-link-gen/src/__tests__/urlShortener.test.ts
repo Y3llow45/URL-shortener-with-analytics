@@ -12,12 +12,6 @@ describe('URL Shortener Integration Test', () => {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     page = await browser.newPage();
-    //page.on('console', (msg) => console.log('PAGE LOG:', msg.text()));
-    //page.on('request', (request) => console.log('Request:', request.url()));
-    //page.on('response', (response) =>
-    //  console.log('Response:', response.url(), response.status())
-    //);
-
   });
 
   afterAll(async () => {
@@ -41,11 +35,12 @@ describe('URL Shortener Integration Test', () => {
     console.log('Short URL:', shortUrl);
 
     await page.goto(`${shortUrl}`);
-    await sleep(1000);
     expect(page.url().slice(0, -1)).toBe(longUrl);
 
     await page.goto('http://localhost:3000/home');
-    await sleep(1000);
+
+    await page.click('button#updateVisitsCount');
+    await sleep(2000);
 
     const visitorCount = await page.$eval('p#visitorCount', (el:any) => parseInt(el.textContent || '0', 10));
     expect(visitorCount).toBeGreaterThan(0);
