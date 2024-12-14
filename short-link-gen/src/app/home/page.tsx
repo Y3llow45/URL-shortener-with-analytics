@@ -60,9 +60,9 @@ export default function HomePage() {
       <div>
         {urls.map((url, index) => (
           <div key={index} style={{ textAlign: 'center', marginBottom: '1rem' }}>
-            <p>Short URL: <a href={url.shortUrl} target="_blank" rel="noopener noreferrer">{url.shortUrl}</a></p>
+            <p>Short URL: <a href={url.shortUrl} id='shortUrl' target="_blank" rel="noopener noreferrer">{url.shortUrl}</a></p>
             <p>Long URL: {url.longUrl}</p>
-            <p>Visitors: {url.visits}</p>
+            <p>Visitors: <p id='visitorCount'>{url.visits}</p></p>
             <button
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
