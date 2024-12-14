@@ -1,5 +1,7 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 describe('URL Shortener Integration Test', () => {
   let browser: Browser;
   let page: Page;
@@ -18,21 +20,22 @@ describe('URL Shortener Integration Test', () => {
 
   test('Shorten URL and verify redirection and visitor count', async () => {
     const longUrl = 'https://www.example.com';
-    await page.goto('http://localhost:3000');
+    await page.goto('http://localhost:3000/home');
     await page.type('input[name="url"]', longUrl);
     await page.click('button#shorten');
     await page.waitForSelector('a#shortUrl');
+
     const shortUrl = await page.$eval('a#shortUrl', (el:any) => el.getAttribute('href'));
-    expect(shortUrl).toBeTruthy();  
+    expect(shortUrl).toBeTruthy();
+
     await page.goto(`http://localhost:3000${shortUrl}`);
-    await page.waitForTimeout(1000);
+    await sleep(1000);
     expect(page.url()).toBe(longUrl);
 
-    
-    await page.goto('http://localhost:3000');
-    await page.waitForTimeout(1000);
+    await page.goto('http://localhost:3000/home');
+    await sleep(1000);
 
     const visitorCount = await page.$eval('span#visitorCount', (el:any) => parseInt(el.textContent || '0', 10));
     expect(visitorCount).toBeGreaterThan(0);
-  });
+  }, 35000);
 });

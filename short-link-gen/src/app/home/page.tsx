@@ -47,10 +47,16 @@ export default function HomePage() {
         type="text"
         placeholder="Enter URL"
         value={longUrl}
+        name='url'
         onChange={(e) => setLongUrl(e.target.value)}
         style={{ marginBottom: '1rem', padding: '0.5rem', width: '300px' }}
       />
-      <button onClick={handleShorten} style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}>Shorten URL</button>
+      <button 
+        onClick={handleShorten} 
+        style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}
+        id='shorten'
+        >Shorten URL
+      </button>
       <div>
         {urls.map((url, index) => (
           <div key={index} style={{ textAlign: 'center', marginBottom: '1rem' }}>
