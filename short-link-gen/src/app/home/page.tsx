@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
-import { addUrl, updateVisits } from '../../store/urlsSlice';
+import { addUrl, updateVisits, removeUrl  } from '../../store/urlsSlice';
 import axios from 'axios';
 import { Url } from '../../types/types';
 
@@ -41,6 +41,28 @@ export default function HomePage() {
     }
   };
 
+  const deleteLink = async (shortUrl: string) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/delete`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ shortUrl }),
+      });
+  
+      if (response.ok) {
+        dispatch(removeUrl(shortUrl));
+      } else {
+        const errorMessage = await response.text();
+        console.error(`Failed to delete: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error(`Error deleting: ${error}`);
+    }
+  };
+  
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <input
@@ -58,18 +80,22 @@ export default function HomePage() {
         >Shorten URL
       </button>
       <div>
+        <hr></hr>
         {urls.map((url, index) => (
           <div key={index} style={{ textAlign: 'center', marginBottom: '1rem' }}>
             <p>Short URL: <a href={url.shortUrl} id='shortUrl' target="_blank" rel="noopener noreferrer">{url.shortUrl}</a></p>
             <p>Long URL: {url.longUrl}</p>
-            <p>Visitors: <p id='visitorCount'>{url.visits}</p></p>
+            <span>Visitors: <p id='visitorCount'>{url.visits}</p></span>
             <button
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
               id='updateVisitsCount'
-            >
-              Refresh Visitors Count
-            </button>
+            >Refresh Visitors Count</button>
+            <button 
+              style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', marginLeft: '0.5rem' }}
+              onClick={() => deleteLink(url.shortUrl)}
+            >Delete</button>
+            <hr></hr>
           </div>
         ))}
       </div>

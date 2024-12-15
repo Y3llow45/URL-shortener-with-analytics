@@ -24,8 +24,11 @@ const urlsSlice = createSlice({
         localStorage.setItem('urls', JSON.stringify(state.urls));
       }
     },
+    removeUrl: (state, action: PayloadAction<string>) => {
+      state.urls = state.urls.filter((url) => url.shortUrl !== action.payload);
+    }
   },
 });
 
-export const { addUrl, updateVisits } = urlsSlice.actions;
+export const { addUrl, updateVisits, removeUrl } = urlsSlice.actions;
 export default urlsSlice.reducer;
