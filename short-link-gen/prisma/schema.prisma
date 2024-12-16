@@ -19,4 +19,5 @@ model Link {
   shortSlug String   @unique
   visits    Int      @default(0)
   createdAt DateTime @default(now())
+  expiration DateTime @default(now())
 }
