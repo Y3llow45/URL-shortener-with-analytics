@@ -17,6 +17,13 @@ export async function GET(req: Request, context: { params: { slug: string } }) {
     return NextResponse.json({ message: 'Short URL not found' }, { status: 404 });
   }
 
+  if (link.expiration < new Date()) {
+    await prisma.link.delete({
+      where: { shortSlug: slug },
+    });
+    return NextResponse.json({ error: 'Link expired' }, { status: 410 });
+  }
+
   await prisma.link.update({
     where: { shortSlug: slug },
     data: { visits: link.visits + 1 },
