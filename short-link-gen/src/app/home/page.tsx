@@ -10,6 +10,7 @@ import { Url } from '../../types/types';
 export default function HomePage() {
   const [longUrl, setLongUrl] = useState('');
   const urls = useSelector((state: RootState) => state.urls.urls);
+  const [expiration, setExpiration] = useState('1440');
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -19,11 +20,12 @@ export default function HomePage() {
 
   const handleShorten = async () => {
     try {
-      const response = await axios.post('/api/shorten', { longUrl });
+      const response = await axios.post('/api/shorten', { longUrl, expiration });
       const newUrl = {
         longUrl,
         shortUrl: response.data.shortUrl,
         visits: response.data.visits,
+        expiration: expiration
       };
       dispatch(addUrl(newUrl));
       setLongUrl('');
@@ -61,7 +63,6 @@ export default function HomePage() {
       console.error(`Error deleting: ${error}`);
     }
   };
-  
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -73,6 +74,28 @@ export default function HomePage() {
         onChange={(e) => setLongUrl(e.target.value)}
         style={{ marginBottom: '1rem', padding: '0.5rem', width: '300px' }}
       />
+      <select
+        name="expiration"
+        onChange={(e) => setExpiration(e.target.value)}
+      >
+        {[
+          { value: 1, label: '1 minute' },
+          { value: 5, label: '5 minutes' },
+          { value: 10, label: '10 minutes' },
+          { value: 30, label: '30 minutes' },
+          { value: 60, label: '1 hour' },
+          { value: 120, label: '2 hours' },
+          { value: 300, label: '5 hours' },
+          { value: 720, label: '12 hours' },
+          { value: 1440, label: '1 day' },
+          { value: 2880, label: '2 days' },
+          { value: 10080, label: '7 days' },
+        ].map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       <button 
         onClick={handleShorten} 
         style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}
