@@ -21,10 +21,12 @@ export default function HomePage() {
   const handleShorten = async () => {
     try {
       const response = await axios.post('/api/shorten', { longUrl, time: expiration });
+      const expirationDate = new Date(Date.now() + parseInt(expiration) * 60000);
       const newUrl = {
         longUrl,
         shortUrl: response.data.shortUrl,
         visits: response.data.visits,
+        expiration: expirationDate
       };
       dispatch(addUrl(newUrl));
       setLongUrl('');
@@ -42,7 +44,7 @@ export default function HomePage() {
     }
   };
 
-  const deleteLink = async (shortUrl: string) => {
+  const deleteLink = async (shortUrl: string, expiration: Date) => {
     try {
       const response = await fetch(`http://localhost:3000/api/delete`, {
         method: 'DELETE',
@@ -107,6 +109,7 @@ export default function HomePage() {
             <p>Short URL: <a href={url.shortUrl} id='shortUrl' target="_blank" rel="noopener noreferrer">{url.shortUrl}</a></p>
             <p>Long URL: {url.longUrl}</p>
             <span>Visitors: <p id='visitorCount'>{url.visits}</p></span>
+            <p>Expiration Date: {url.expiration.toString()}</p>
             <button
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
@@ -114,7 +117,7 @@ export default function HomePage() {
             >Refresh Visitors Count</button>
             <button 
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', marginLeft: '0.5rem' }}
-              onClick={() => deleteLink(url.shortUrl)}
+              onClick={() => deleteLink(url.shortUrl, url.expiration)}
             >Delete</button>
             <hr></hr>
           </div>
