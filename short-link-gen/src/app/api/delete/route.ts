@@ -19,10 +19,7 @@ export async function DELETE(req: Request) {
     });
 
     if (!existingLink) {
-      return NextResponse.json(
-        { error: 'URL not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'URL deleted successfully' });
     }
 
     await prisma.link.delete({
