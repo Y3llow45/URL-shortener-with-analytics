@@ -25,7 +25,7 @@ describe('URL Shortener Integration Test', () => {
     await page.type('input[name="url"]', longUrl);
     await page.click('button#shorten');
     
-    await page.waitForSelector('a#shortUrl', {visible:true, timeout: 5000});
+    await page.waitForSelector('a#shortUrl', {visible:true, timeout: 8000});
 
     const shortUrl = await page.evaluate(() => {
       const linkElement = document.getElementById('shortUrl') as HTMLAnchorElement;

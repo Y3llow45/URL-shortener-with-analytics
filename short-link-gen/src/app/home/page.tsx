@@ -10,7 +10,7 @@ import { Url } from '../../types/types';
 export default function HomePage() {
   const [longUrl, setLongUrl] = useState('');
   const urls = useSelector((state: RootState) => state.urls.urls);
-  const [expiration, setExpiration] = useState('1440');
+  const [expiration, setExpiration] = useState('300');
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -20,12 +20,11 @@ export default function HomePage() {
 
   const handleShorten = async () => {
     try {
-      const response = await axios.post('/api/shorten', { longUrl, expiration });
+      const response = await axios.post('/api/shorten', { longUrl, time: expiration });
       const newUrl = {
         longUrl,
         shortUrl: response.data.shortUrl,
         visits: response.data.visits,
-        expiration: expiration
       };
       dispatch(addUrl(newUrl));
       setLongUrl('');
@@ -79,7 +78,6 @@ export default function HomePage() {
         onChange={(e) => setExpiration(e.target.value)}
       >
         {[
-          { value: 1, label: '1 minute' },
           { value: 5, label: '5 minutes' },
           { value: 10, label: '10 minutes' },
           { value: 30, label: '30 minutes' },
