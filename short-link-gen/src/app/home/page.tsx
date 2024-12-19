@@ -22,7 +22,7 @@ export default function HomePage() {
   const handleShorten = async () => {
     try {
       const response = await axios.post('/api/shorten', { longUrl, time: expiration, qrCode });
-      const expirationDate = new Date(Date.now() + parseInt(expiration) * 60000);
+      const expirationDate = new Date(Date.now() + parseInt(expiration) * 60000).toISOString();
       const newUrl = {
         longUrl,
         shortUrl: response.data.shortUrl,
@@ -46,7 +46,7 @@ export default function HomePage() {
     }
   };
 
-  const deleteLink = async (shortUrl: string, expiration: Date) => {
+  const deleteLink = async (shortUrl: string) => {
     try {
       const response = await fetch(`http://localhost:3000/api/delete`, {
         method: 'DELETE',
@@ -133,7 +133,7 @@ export default function HomePage() {
             >Refresh Visitors Count</button>
             <button 
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', marginLeft: '0.5rem' }}
-              onClick={() => deleteLink(url.shortUrl, url.expiration)}
+              onClick={() => deleteLink(url.shortUrl)}
             >Delete</button>
             <hr></hr>
           </div>
