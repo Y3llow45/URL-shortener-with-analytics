@@ -20,4 +20,5 @@ model Link {
   visits    Int      @default(0)
   createdAt DateTime @default(now())
   expiration DateTime @default(now())
+  qrCode    String?
 }
