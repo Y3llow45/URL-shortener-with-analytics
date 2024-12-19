@@ -3,4 +3,5 @@ export interface Url {
   shortUrl: string;
   visits: number;
   expiration: Date;
+  qrCode: string;
 }

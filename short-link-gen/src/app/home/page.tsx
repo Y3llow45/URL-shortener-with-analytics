@@ -21,13 +21,14 @@ export default function HomePage() {
 
   const handleShorten = async () => {
     try {
-      const response = await axios.post('/api/shorten', { longUrl, time: expiration });
+      const response = await axios.post('/api/shorten', { longUrl, time: expiration, qrCode });
       const expirationDate = new Date(Date.now() + parseInt(expiration) * 60000);
       const newUrl = {
         longUrl,
         shortUrl: response.data.shortUrl,
         visits: response.data.visits,
-        expiration: expirationDate
+        expiration: expirationDate,
+        qrCode: response.data.qrCode,
       };
       dispatch(addUrl(newUrl));
       setLongUrl('');
@@ -119,6 +120,12 @@ export default function HomePage() {
             <p>Long URL: {url.longUrl}</p>
             <span>Visitors: <p id='visitorCount'>{url.visits}</p></span>
             <p>Expiration Date: {url.expiration.toString()}</p>
+            {url.qrCode && (
+              <div>
+                <p>QR Code:</p>
+                <img src={url.qrCode} alt="QR Code" style={{ maxWidth: '150px', maxHeight: '150px' }} />
+              </div>
+            )}
             <button
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
