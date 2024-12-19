@@ -11,6 +11,7 @@ export default function HomePage() {
   const [longUrl, setLongUrl] = useState('');
   const urls = useSelector((state: RootState) => state.urls.urls);
   const [expiration, setExpiration] = useState('300');
+  const [qrCode, setqrCode] = useState(false);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -65,6 +66,10 @@ export default function HomePage() {
     }
   };
 
+  const handleQrCodeCheckBox = () => {
+    setqrCode(!qrCode);
+  }
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <input
@@ -96,6 +101,10 @@ export default function HomePage() {
           </option>
         ))}
       </select>
+      <label>
+        <input type="checkbox" onClick={handleQrCodeCheckBox}/>
+        Generate QR code
+      </label>
       <button 
         onClick={handleShorten} 
         style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}
