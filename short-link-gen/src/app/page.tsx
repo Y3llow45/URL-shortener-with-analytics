@@ -17,12 +17,14 @@ export default function Home() {
         <li>Set expiration dates for URLs</li>
       </ul>
       <h2>Tech Stack</h2>
-      <ul className="tech-stack">
-        <li><img className='techimg' src="next.svg" alt="Next.js" /> Next.js</li>
-        <li><img className='techimg' src="redux.svg" alt="Redux Toolkit" /> Redux Toolkit</li>
-        <li><img className='techimg' src="prisma.svg" alt="Prisma" /> Prisma</li>
-        <li><img className='techimg' src="typescript.svg" alt="TypeScript" /> TypeScript</li>
-      </ul>
+      <div className="tech-stack-div">
+        <ul className="tech-stack">
+          <li><img className='techimg' src="next.svg" alt="Next.js" /> Next.js</li>
+          <li><img className='techimg' src="redux.svg" alt="Redux Toolkit" /> Redux Toolkit</li>
+          <li><img className='techimg' src="prisma.svg" alt="Prisma" /> Prisma</li>
+          <li><img className='techimg' src="typescript.svg" alt="TypeScript" /> TypeScript</li>
+        </ul>
+      </div>
     </div>
   );
 }

@@ -38,7 +38,6 @@ h2 {
 .features-list, .tech-stack {
   list-style-type: none;
   padding: 0;
-  text-align: left;
   margin: 0 auto;
   max-width: 400px;
 }
@@ -46,7 +45,6 @@ h2 {
 .features-list li, .tech-stack li {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  display: flex;
   align-items: center;
 }
 
@@ -56,12 +54,22 @@ h2 {
   margin-right: 0.5rem;
 }
 
+.tech-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .tech-stack li {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .techimg {
-  width: 48px;
-  height: 48px;
-  margin-right: 0.5rem;
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.tech-stack-div {
+  justify-content: center;
+  display: flex;
 }

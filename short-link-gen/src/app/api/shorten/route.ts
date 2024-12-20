@@ -20,7 +20,6 @@ export async function POST(req: Request) {
   let qrCodeUrl: string = '';
   if (qrCode) {
     qrCodeUrl = await QRCode.toDataURL(`${longUrl}`);
-    console.log(qrCodeUrl)
   }
   
   const newLink = await prisma.link.create({
