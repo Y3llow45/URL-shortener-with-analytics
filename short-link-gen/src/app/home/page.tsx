@@ -21,6 +21,11 @@ export default function HomePage() {
 
   const handleShorten = async () => {
     try {
+      const regex = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*\/?$/;
+      if (regex.test(longUrl) === false) {
+        alert('Please enter a valid URL');
+        return;
+      }
       const response = await axios.post('/api/shorten', { longUrl, time: expiration, qrCode });
       const expirationDate = new Date(Date.now() + parseInt(expiration) * 60000).toISOString();
       const newUrl = {
