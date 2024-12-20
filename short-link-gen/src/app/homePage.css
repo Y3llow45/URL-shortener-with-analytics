@@ -1,16 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.welcome-text {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  color: #0070f3;
+  font-weight: 700;
 }
 
-p {
+.description {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
@@ -19,14 +32,36 @@ h2 {
   font-size: 2rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  color: #0070f3;
 }
 
-ul {
+.features-list, .tech-stack {
   list-style-type: none;
   padding: 0;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 400px;
 }
 
-li {
+.features-list li, .tech-stack li {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.tech-stack li img {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5rem;
+}
+
+.tech-stack li {
+  justify-content: center;
+}
+
+.techimg {
+  width: 48px;
+  height: 48px;
+  margin-right: 0.5rem;
 }
