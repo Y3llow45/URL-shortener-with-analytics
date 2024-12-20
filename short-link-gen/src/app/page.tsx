@@ -1,7 +1,16 @@
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import './homePage.css';
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleRedirect = () => {
+    router.push('/home');
+  };
+
   return (
     <div className="container">
       <h1 className="welcome-text">Welcome to URL Shortener with Analytics</h1>
@@ -25,6 +34,7 @@ export default function Home() {
           <li><img className='techimg' src="typescript.svg" alt="TypeScript" /> TypeScript</li>
         </ul>
       </div>
+      <button className="redirect-button" onClick={handleRedirect}>Get Started</button>
     </div>
   );
 }
