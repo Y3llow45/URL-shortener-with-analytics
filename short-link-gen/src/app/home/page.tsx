@@ -77,7 +77,7 @@ export default function HomePage() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={{ marginTop: '50px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
       <input
         type="text"
         placeholder="Enter URL"
@@ -107,7 +107,7 @@ export default function HomePage() {
           </option>
         ))}
       </select>
-      <label>
+      <label style={{marginTop: '8px', marginBottom: '8px'}}>
         <input type="checkbox" onClick={handleQrCodeCheckBox}/>
         Generate QR code
       </label>

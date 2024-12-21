@@ -18,7 +18,7 @@ export default function Home() {
         This website allows you to shorten long URLs, generate QR codes for them, and track the number of visitors. 
         You can also set an expiration date for your shortened URLs.
       </p>
-      <h2>Features</h2>
+      <h2 className='features-text'>Features</h2>
       <ul className="features-list">
         <li>Shorten long URLs</li>
         <li>Generate QR codes for shortened URLs</li>

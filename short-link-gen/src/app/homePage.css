@@ -2,14 +2,14 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
   color: #333;
+  background-color: #f0f0f0;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.9rem;
   text-align: center;
   background-color: #fff;
   border-radius: 8px;
@@ -21,11 +21,11 @@ body {
   margin-bottom: 1rem;
   color: #0070f3;
   font-weight: 700;
+  margin-top: 0px;
 }
 
 .description {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
 }
 
 h2 {
@@ -83,10 +83,14 @@ h2 {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  margin-top: 2rem;
+  margin-top: 0.8rem;
 }
 
 .redirect-button:hover {
   background-color: white;
   color: #0070f3;
+}
+
+.features-text {
+  margin-top: 20px;
 }
