@@ -25,7 +25,7 @@ describe('URL Shortener Integration Test', () => {
     await page.goto('http://localhost:3000/home');
     await page.type('input[name="url"]', longUrl);
     await page.click('button#shorten');
-    
+    await sleep(5000);
     await page.waitForSelector('a#shortUrl', {visible:true, timeout: 50000});
 
     const shortUrl = await page.evaluate(() => {
