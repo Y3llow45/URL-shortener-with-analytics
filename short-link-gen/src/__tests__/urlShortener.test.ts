@@ -30,14 +30,10 @@ describe('URL Shortener Integration Test', () => {
   });
 
   test('Shorten URL and verify redirection and visitor count', async () => {
-    await sleep(5000);
     const longUrl = 'https://www.example.com';
     await page.goto('http://localhost:3000/home');
-    await sleep(5000);
     await page.type('input[name="url"]', longUrl);
-    await sleep(5000);
     await page.click('button#shorten');
-    await sleep(5000);
     
     await page.waitForSelector('a#shortUrl', {visible:true, timeout: 20000});
 
