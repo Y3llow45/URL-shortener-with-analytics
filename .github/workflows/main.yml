@@ -10,16 +10,31 @@ on:
 jobs:
   Jest:
     runs-on: ubuntu-latest
+    services:
+      web:
+        image: node:18.19.0
+        ports:
+          - 3000:3000
+        options: >-
+          --health-cmd="curl --fail http://localhost:3000 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.19.0'
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
+        working-directory: ./short-link-gen
+      - name: Start server
+        run: npm run build && npm start &
+        working-directory: ./short-link-gen
+      - name: Wait for server to be ready
+        run: sleep 30
         working-directory: ./short-link-gen
       - name: Run Tests
         run: npm test
         working-directory: ./short-link-gen
-            
