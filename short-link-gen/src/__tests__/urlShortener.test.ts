@@ -19,6 +19,9 @@ describe('URL Shortener Integration Test', () => {
   });
 
   afterAll(async () => {
+    if (page) {
+      await page.screenshot({ path: 'error_screenshot.png' });
+    }
     if (browser) {
       await browser.close();
     }
@@ -27,8 +30,11 @@ describe('URL Shortener Integration Test', () => {
   test('Shorten URL and verify redirection and visitor count', async () => {
     const longUrl = 'https://www.example.com';
     await page.goto('http://localhost:3000/home');
+    await sleep(5000);
     await page.type('input[name="url"]', longUrl);
+    await sleep(5000);
     await page.click('button#shorten');
+    await sleep(5000);
     
     await page.waitForSelector('a#shortUrl', {visible:true, timeout: 20000});
 
@@ -37,12 +43,14 @@ describe('URL Shortener Integration Test', () => {
       return linkElement?.href || null;
     });
     expect(shortUrl).toBeTruthy();
+    await sleep(5000);
 
-    await page.goto(`${shortUrl}`);
-    expect(page.url().slice(0, -1)).toBe(longUrl);
+    const newPage = await browser.newPage();
+    await newPage.goto(`${shortUrl}`);
+    expect(newPage.url().slice(0, -1)).toBe(longUrl);
+    await sleep(5000);
+    await newPage.close();
 
-    await page.goto('http://localhost:3000/home');
-    await sleep(50);
     await page.click('button#updateVisitsCount');
     await sleep(2000);
 
