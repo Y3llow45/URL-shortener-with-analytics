@@ -117,6 +117,7 @@ export default function HomePage() {
       <button 
         onClick={handleShorten} 
         style={{ padding: '0.5rem 1rem', marginBottom: '1rem' }}
+        className='shorten'
         id='shorten'
         >Shorten URL
       </button>
@@ -138,6 +139,7 @@ export default function HomePage() {
               onClick={() => refreshVisits(url.shortUrl.split('/').pop()!, url.shortUrl)}
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem' }}
               id='updateVisitsCount'
+              className='updateVisitsCount'
             >Refresh Visitors Count</button>
             <button 
               style={{ marginTop: '0.5rem', padding: '0.5rem 1rem', marginLeft: '0.5rem' }}

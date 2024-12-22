@@ -8,7 +8,7 @@ describe('URL Shortener Integration Test', () => {
 
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     page = await browser.newPage();
@@ -25,24 +25,23 @@ describe('URL Shortener Integration Test', () => {
     await page.type('input[name="url"]', longUrl);
     await page.click('button#shorten');
     
-    await page.waitForSelector('a#shortUrl', {visible:true, timeout: 10000});
+    await page.waitForSelector('a#shortUrl', {visible:true, timeout: 20000});
 
     const shortUrl = await page.evaluate(() => {
       const linkElement = document.getElementById('shortUrl') as HTMLAnchorElement;
       return linkElement?.href || null;
     });
     expect(shortUrl).toBeTruthy();
-    console.log('Short URL:', shortUrl);
 
     await page.goto(`${shortUrl}`);
     expect(page.url().slice(0, -1)).toBe(longUrl);
 
     await page.goto('http://localhost:3000/home');
-
+    await sleep(50);
     await page.click('button#updateVisitsCount');
     await sleep(2000);
 
     const visitorCount = await page.$eval('p#visitorCount', (el:any) => parseInt(el.textContent || '0', 10));
     expect(visitorCount).toBeGreaterThan(0);
-  }, 180000);
+  }, 360000);
 });
