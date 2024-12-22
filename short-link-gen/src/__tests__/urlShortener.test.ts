@@ -10,9 +10,7 @@ describe('URL Shortener Integration Test', () => {
     await sleep(2000);
     try {
       browser = await puppeteer.launch({
-        headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      });
+        headless: true});
       await sleep(5000);
       page = await browser.newPage();
     } catch (error) {
