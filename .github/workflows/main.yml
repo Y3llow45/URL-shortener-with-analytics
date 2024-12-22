@@ -11,9 +11,15 @@ jobs:
   Jest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./short-link-gen
       - name: Run Tests
-        run: |
-          npm install 
-          npm test
+        run: npm test
+        working-directory: ./short-link-gen
             
