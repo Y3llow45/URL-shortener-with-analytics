@@ -18,8 +18,8 @@ jobs:
         options: >-
           --health-cmd="curl --fail http://localhost:3000 || exit 1"
           --health-interval=30s
-          --health-timeout=10s
-          --health-retries=5
+          --health-timeout=30s
+          --health-retries=10
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
@@ -30,11 +30,14 @@ jobs:
         run: npm install
         working-directory: ./short-link-gen
       - name: Start server
-        run: npm run build && npm start &
+        run: |
+          npm run build
+          npm start &
+          sleep 10
+          curl -v http://localhost:3000
         working-directory: ./short-link-gen
       - name: Wait for server to be ready
         run: sleep 60
-        working-directory: ./short-link-gen
       - name: Run Tests
         run: npm test
         working-directory: ./short-link-gen
