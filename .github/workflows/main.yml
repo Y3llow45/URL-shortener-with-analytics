@@ -20,12 +20,16 @@ jobs:
         run: npm install
         working-directory: ./short-link-gen
       - name: Build project
-        run: |
-          npm run dev
+        run: npm run build
         working-directory: ./short-link-gen
       - name: Start server
         run: |
-          npm start
+          npm start &
+          sleep 20 # Increase sleep time to ensure the server has enough time to start
+          curl -v http://localhost:3000
+        working-directory: ./short-link-gen
+      - name: Check server status
+        run: curl -v http://localhost:3000
         working-directory: ./short-link-gen
       - name: Run Tests
         run: npm run test
