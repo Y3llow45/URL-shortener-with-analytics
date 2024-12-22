@@ -28,6 +28,7 @@ describe('URL Shortener Integration Test', () => {
   });
 
   test('Shorten URL and verify redirection and visitor count', async () => {
+    await sleep(5000);
     const longUrl = 'https://www.example.com';
     await page.goto('http://localhost:3000/home');
     await sleep(5000);
