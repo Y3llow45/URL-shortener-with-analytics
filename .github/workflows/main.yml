@@ -19,6 +19,13 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./short-link-gen
-      - name: Install Puppeteer dependencies
+      - name: Start server
         run: |
-          sudo apt-
+          npm run build
+          npm start &
+          sleep 5
+          curl -v http://localhost:3000
+        working-directory: ./short-link-gen
+      - name: Run Tests
+        run: npm test
+        working-directory: ./short-link-gen
