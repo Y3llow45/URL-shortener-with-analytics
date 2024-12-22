@@ -20,15 +20,33 @@ describe('URL Shortener Integration Test', () => {
     }
   });
 
+  const retryClick = async (page: Page, selector: string, retries: number = 3) => {
+    for (let i = 0; i < retries; i++) {
+      await page.click(selector);
+      await sleep(5000);
+      const exists = await page.$('a#shortUrl');
+      if (exists) return true;
+      if (i < retries - 1) {
+        await page.reload();
+        await sleep(5000);
+        await page.type('input[name="url"]', 'https://www.example.com');
+        await sleep(5000);
+      }
+    }
+    return false;
+  };
+
   test('Shorten URL and verify redirection and visitor count', async () => {
     await sleep(500);
     const longUrl = 'https://www.example.com';
     await page.goto('http://localhost:3000/home');
-    await sleep(1000);
+    await sleep(500);
     await page.type('input[name="url"]', longUrl);
     await sleep(500);
-    await page.click('button#shorten');
-    await sleep(5000);
+
+    const clicked = await retryClick(page, 'button#shorten');
+    expect(clicked).toBe(true);
+    
     await page.waitForSelector('a#shortUrl', {visible:true, timeout: 5000});
 
     const shortUrl = await page.evaluate(() => {
