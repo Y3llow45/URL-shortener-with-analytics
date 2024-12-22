@@ -7,16 +7,21 @@ describe('URL Shortener Integration Test', () => {
   let page: Page;
 
   beforeAll(async () => {
-    browser = await puppeteer.launch({
-      headless: false,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    page = await browser.newPage();
+    try {
+      browser = await puppeteer.launch({
+        headless: false,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      });
+      page = await browser.newPage();
+    } catch (error) {
+      console.error('Error during setup:', error);
+    }
   });
 
   afterAll(async () => {
-    await page.screenshot({ path: 'error_screenshot.png' });
-    await browser.close();
+    if (browser) {
+      await browser.close();
+    }
   });
 
   test('Shorten URL and verify redirection and visitor count', async () => {
