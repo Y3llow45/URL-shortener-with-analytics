@@ -21,7 +21,7 @@ export default function HomePage() {
 
   const handleShorten = async () => {
     try {
-      const regex = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*\/?$/;
+      const regex = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*(\?.*)?$/;
       if (regex.test(longUrl) === false) {
         alert('Please enter a valid URL');
         return;
@@ -63,6 +63,9 @@ export default function HomePage() {
   
       if (response.ok) {
         dispatch(removeUrl(shortUrl));
+        const storedUrls = JSON.parse(localStorage.getItem('urls') || '[]');
+        const updatedUrls = storedUrls.filter((url: Url) => url.shortUrl !== shortUrl);
+        localStorage.setItem('urls', JSON.stringify(updatedUrls));
       } else {
         const errorMessage = await response.text();
         console.error(`Failed to delete: ${errorMessage}`);
