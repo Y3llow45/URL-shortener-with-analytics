@@ -20,7 +20,8 @@ jobs:
         run: npm install
         working-directory: ./short-link-gen
       - name: Build project
-        run: npm run dev
+        run: |
+          npm run dev
         working-directory: ./short-link-gen
       - name: Start server
         run: |
