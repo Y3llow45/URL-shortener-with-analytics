@@ -27,5 +27,5 @@ jobs:
           curl -v http://localhost:3000
         working-directory: ./short-link-gen
       - name: Run Tests
-        run: npm test
+        run: npm run test
         working-directory: ./short-link-gen
