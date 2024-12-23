@@ -26,3 +26,4 @@ jobs:
       run: |
         npm install
         npx webpack
+      working-directory: ./short-link-gen
