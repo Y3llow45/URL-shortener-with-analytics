@@ -31,5 +31,5 @@ jobs:
       working-directory: ./short-link-gen
 
     - name: Build
-      run: npx webpack
+      run: npx webpack --config webpack.config.js
       working-directory: ./short-link-gen
