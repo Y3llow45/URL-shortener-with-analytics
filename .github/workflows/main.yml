@@ -14,7 +14,8 @@ jobs:
       run:
         working-directory: ./short-link-gen
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -27,7 +28,7 @@ jobs:
         run: |
           npm start &
           sleep 20 # Increase sleep time to ensure the server has enough time to start
-          curl -v http://localhost:3000
+          until curl -s http://localhost:3000 > /dev/null; do echo waiting for server; sleep 5; done
       - name: Check server status
         run: curl -v http://localhost:3000
       - name: Run Tests
